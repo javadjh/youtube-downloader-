@@ -9,8 +9,8 @@ import { getDist, options } from 'config/storage';
 import { mergeAll } from 'middleware/wrpper';
 import { CorsMiddleware } from 'middleware/cors';
 import { headersMiddleware } from 'middleware/header';
-import ytdl from 'ytdl-core';
-import * as fs from 'fs';
+
+import { getVideoInformation } from 'handlers/video/query/GetVideoInformationQuery';
 env();
 
 (async () => {

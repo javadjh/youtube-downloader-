@@ -1,9 +1,8 @@
 import express from 'express';
-// import user from './user.routes';
-
+import video from './video.routes';
 
 let router = express.Router();
 
-// router.use(user);
+router.use(video);
 
 export default router;
