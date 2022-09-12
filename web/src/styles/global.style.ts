@@ -63,3 +63,13 @@ export const CenterStyled = styled.div`
   justify-items: center;
   align-items: center;
 `
+export const FormatStyled = styled.div`
+  background-color: #3d4d91;
+  border-radius: 7px;
+  padding: 5px 15px;
+  color: white;
+  cursor: pointer;
+  &:hover{
+    background-color: #303d73;
+  }
+`

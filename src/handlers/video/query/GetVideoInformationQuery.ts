@@ -6,6 +6,7 @@ import { IVideo } from 'interfaces/video';
 import { HandledError } from 'config/error';
 import { CANT_DO_ERROR_MESSAGE } from 'constants/messages';
 import VideoSchema from 'db/schema/video.schema';
+import { byteToSize } from 'config/sizeUtility';
 export const getVideoInformation = middleware(
    async ({ res, req }: IMiddlewareModel) => {
       const { url } = req.body;
@@ -19,10 +20,13 @@ export const getVideoInformation = middleware(
          endIndex === -1 ? url.length : url.indexOf('&')
       );
 
-      const video = await VideoSchema.findOne({
+      const video: IVideo = await VideoSchema.findOne({
          url,
-      });
+      }).lean();
       if (video?._id) {
+         video.formats.map((format) => {
+            format.contentLength = byteToSize(parseInt(format.contentLength));
+         });
          return res.send(video);
       }
 
