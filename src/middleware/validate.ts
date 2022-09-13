@@ -39,7 +39,7 @@ export const checkToken = middleware(
 
       const tokenDecode = await jwt.verify(
          token.toString(),
-         'sdcsdcs65d4c1s6325dc1s32dc'
+         process?.env?.TOKEN_SECRET || 'none'
       );
 
       if (tokenDecode) {

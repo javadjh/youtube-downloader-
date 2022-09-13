@@ -10,6 +10,8 @@ import VideoSchema from 'db/schema/video.schema';
 import { IVideo } from 'interfaces/video';
 import readline from 'readline';
 import { getDist } from 'config/storage';
+import { mergeAll } from 'middleware/wrpper';
+import { checkToken } from 'middleware/validate';
 export const getFileQuery = middleware(
    async ({ res, req }: IMiddlewareModel) => {
       const { id, itag } = req.params;
@@ -95,3 +97,4 @@ const getFileName = (format: videoFormat): any => {
    let urlFileName = `http://localhost:4400/upload/${name}`;
    return { fileName, urlFileName };
 };
+export const getFileQueryHandler = mergeAll([checkToken, getFileQuery]);

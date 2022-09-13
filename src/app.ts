@@ -9,8 +9,8 @@ import { getDist, options } from 'config/storage';
 import { mergeAll } from 'middleware/wrpper';
 import { CorsMiddleware } from 'middleware/cors';
 import { headersMiddleware } from 'middleware/header';
+import { insertGroup } from 'handlers/group/command/InsertGroupCommand';
 
-import { getVideoInformation } from 'handlers/video/query/GetVideoInformationQuery';
 env();
 
 (async () => {
@@ -29,6 +29,7 @@ env();
    app.use('/api/v1', apiMiddleware);
 
    app.use('/upload', fileMiddleware);
+   app.get('/group', insertGroup);
    app.get('/*', (req, res) => {
       res.send(
          '<h1>this is serverside route , please go back to the front</h1>'

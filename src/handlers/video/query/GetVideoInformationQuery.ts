@@ -7,7 +7,10 @@ import { HandledError } from 'config/error';
 import { CANT_DO_ERROR_MESSAGE } from 'constants/messages';
 import VideoSchema from 'db/schema/video.schema';
 import { byteToSize } from 'config/sizeUtility';
-export const getVideoInformation = middleware(
+import { videoDataWrapper } from '../share';
+import { mergeAll } from 'middleware/wrpper';
+import { checkToken } from 'middleware/validate';
+const getVideoInformation = middleware(
    async ({ res, req }: IMiddlewareModel) => {
       const { url } = req.body;
       if (!url) throw new HandledError(CANT_DO_ERROR_MESSAGE);
@@ -27,6 +30,7 @@ export const getVideoInformation = middleware(
          video.formats.map((format) => {
             format.contentLength = byteToSize(parseInt(format.contentLength));
          });
+         videoDataWrapper(video);
          return res.send(video);
       }
 
@@ -52,7 +56,12 @@ export const getVideoInformation = middleware(
             formats: info.formats,
          };
          const video = await insertVideo(videoData);
+         videoDataWrapper(video);
          res.send(video);
       }
    }
 );
+export const getVideoInformationHandler = mergeAll([
+   checkToken,
+   getVideoInformation,
+]);

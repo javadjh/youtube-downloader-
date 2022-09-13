@@ -1,3 +1,4 @@
+import { Input } from 'antd'
 import styled from 'styled-components'
 export const DarkBackgroundColorStyled = styled.div`
     background-color: #282828;
@@ -8,8 +9,6 @@ export const DarkBackgroundColorStyled = styled.div`
     -moz-box-shadow: 0px 0px 67px 9px rgba(0,0,0,0.24);
     
     color: white;
-    
-    
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
@@ -18,7 +17,20 @@ export const DarkBackgroundColorStyled = styled.div`
     align-content: flex-end;
     width: 100%;
 `
+export const BackgroundGradient = styled.div`
+background: #56CCF2;  /* fallback for old browsers */
+background: -webkit-linear-gradient(to right, #2F80ED, #56CCF2);  /* Chrome 10-25, Safari 5.1-6 */
+background: linear-gradient(to right, #2F80ED, #56CCF2); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 
+  padding-top: 10px;
+
+`
+export const CustomInput = styled(Input)`
+  font-size: 40px;
+`
+export const WhiteColorStyled = styled.p`
+  color:white
+`
 export const CenterVerticalStyled = styled.div`
   display: flex;
   align-items: center;
@@ -72,4 +84,17 @@ export const FormatStyled = styled.div`
   &:hover{
     background-color: #303d73;
   }
+`
+export const VideoCardStyled = styled.div`
+  width: 100%;
+  border-radius: 10px;
+  padding: 10px;
+  cursor: pointer;
+`
+export const ImageStyled = {
+  borderRadius:10
+}
+export const HomePageHeader = styled.div`
+  background-color: #282828;
+  min-height: 200px;
 `
