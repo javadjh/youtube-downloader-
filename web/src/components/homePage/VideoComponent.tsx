@@ -1,4 +1,5 @@
 import { Button, Card, Col, Image, Row, Typography } from "antd"
+import Paragraph from "antd/lib/skeleton/Paragraph"
 import {useContext} from 'react'
 import { HomePageContext } from "../../context/home/HomePageContext"
 import { SpaceStyled } from "../../styles/global.style"
@@ -61,7 +62,15 @@ const VideoComponent = ()=>{
                                                 <Button type="primary">صفحه ویدیو</Button>
                                             </a>
                                         </SpaceStyled>
-
+                                    </Col>
+                                    <Col>
+                                        <SpaceStyled right={10}>
+                                            {videoInfo?.files[0]?.file && (
+                                                <SpaceStyled top={5}>
+                                                    <Typography.Link ellipsis={true} style={{width:230}} copyable={{ text: videoInfo?.files[0]?.file }}>{videoInfo?.files[0]?.file}</Typography.Link>
+                                                </SpaceStyled>
+                                            )}
+                                        </SpaceStyled>
                                     </Col>
                                 </Row>
                             </SpaceStyled>

@@ -52,7 +52,7 @@ const HomePageContextProvider:React.FC<IHomePageContextProvider> = ({children})=
     })
     useEffect(()=>{
         getVideos()
-    },[video.pageId])
+    },[video.pageId,video.searchValue])
     useEffect(()=>{
         getGroups()
     },[group.pageId])
