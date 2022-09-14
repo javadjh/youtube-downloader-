@@ -63,14 +63,14 @@ const insertGroup = middleware(async ({ res, req }: IMiddlewareModel) => {
                },
             }
          );
-         await axios.get(
-            `http://localhost:5500/api/v1/video/link/${data._id}/${data.formats[0].itag}`,
-            {
-               headers: {
-                  token: `${req?.headers?.token}`,
-               },
-            }
-         );
+         // await axios.get(
+         //    `http://localhost:5500/api/v1/video/link/${data._id}/${data.formats[0].itag}`,
+         //    {
+         //       headers: {
+         //          token: `${req?.headers?.token}`,
+         //       },
+         //    }
+         // );
          console.log(data._id);
 
          group.videoIds.push(data._id);

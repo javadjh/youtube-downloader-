@@ -6,7 +6,7 @@ import { HomePageContext } from "../../context/home/HomePageContext"
 import {CloudUploadOutlined} from '@ant-design/icons'
 
 const HeaderComponent = ()=>{
-    const {isVideoInfoLoading,getVideoInfo,isLoading,setIsLoading} = useContext(HomePageContext)
+    const {isVideoInfoLoading,getVideoInfo,isLoading,setIsLoading,getGroups,setIsShowGroupsVideo} = useContext(HomePageContext)
     return (
         <DarkBackgroundColorStyled>
             <div style={{width:"100%"}}>
@@ -19,10 +19,17 @@ const HeaderComponent = ()=>{
                             <Form.Item name={"url"}>
                                 <CustomInput.Search 
                                     loading={isVideoInfoLoading}
-                                size="large" enterButton allowClear onSearch={getVideoInfo} placeholder="لینک فیلم یوتیوب را وارد کنید..." style={{width:"100%"}}/>
+                                    size="large" enterButton allowClear
+                                    onSearch={getVideoInfo}
+                                    placeholder="لینک فیلم یوتیوب را وارد کنید..." 
+                                    style={{width:"100%"}}/>
                             </Form.Item>
                             <CenterStyled>
-                                <UploaderComponent onUploaded={()=> setIsLoading(false) }>
+                                <UploaderComponent onUploaded={()=> {
+                                    setIsShowGroupsVideo(false)
+                                    getGroups()
+                                    setIsLoading(false)
+                                 }}>
                                     <Button
                                         type="primary"
                                         icon={<CloudUploadOutlined style={{fontSize:16}}/>}
