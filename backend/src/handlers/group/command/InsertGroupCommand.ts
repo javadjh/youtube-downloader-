@@ -8,10 +8,13 @@ import { IGroup } from 'interfaces/group';
 import GroupSchema from 'db/schema/group.schema';
 import { mergeAll } from 'middleware/wrpper';
 import { checkToken } from 'middleware/validate';
+import multer from '../../file/multerResolver';
 const insertGroup = middleware(async ({ res, req }: IMiddlewareModel) => {
-   const fileName = req.body.fileName;
-   //   const pathAddress = getDist() + `/${fileName}`;
-   const pathAddress = getDist() + `/example.txt`;
+   const fileName = req.file.filename;
+   console.log(fileName);
+
+   const pathAddress = getDist() + `/${fileName}`;
+   // const pathAddress = getDist() + `/example.txt`;
 
    const txt = fs.createReadStream(pathAddress);
    const rl = readline.createInterface({
@@ -31,7 +34,7 @@ const insertGroup = middleware(async ({ res, req }: IMiddlewareModel) => {
 
       if (line.includes('title:')) {
          parts.push({
-            title: line.substr(line.indexOf('title:')),
+            title: line.substr(line.indexOf('title:') + 6),
             links: [],
          });
       } else {
@@ -60,14 +63,14 @@ const insertGroup = middleware(async ({ res, req }: IMiddlewareModel) => {
                },
             }
          );
-         await axios.get(
-            `http://localhost:4400/api/v1/video/link/${data._id}/${data.formats[0].itag}`,
-            {
-               headers: {
-                  token: `${req?.headers?.token}`,
-               },
-            }
-         );
+         // await axios.get(
+         //    `http://localhost:4400/api/v1/video/link/${data._id}/${data.formats[0].itag}`,
+         //    {
+         //       headers: {
+         //          token: `${req?.headers?.token}`,
+         //       },
+         //    }
+         // );
          console.log(data._id);
 
          group.videoIds.push(data._id);
@@ -88,4 +91,8 @@ const insertGroup = middleware(async ({ res, req }: IMiddlewareModel) => {
    }
    res.send(resList);
 });
-export const insertGroupHandler = mergeAll([checkToken, insertGroup]);
+export const insertGroupHandler = mergeAll([
+   multer.single('file'),
+   checkToken,
+   insertGroup,
+]);

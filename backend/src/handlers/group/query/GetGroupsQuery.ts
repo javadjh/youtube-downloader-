@@ -1,4 +1,4 @@
-import { itemArrayDateToJalali } from 'config/dateUtility';
+import { itemArrayDateToJalali, itemDateToJalali } from 'config/dateUtility';
 import { filterQuery } from 'config/globalUtility';
 import GroupSchema from 'db/schema/group.schema';
 import { IMiddlewareModel } from 'interfaces';
@@ -17,8 +17,9 @@ const getGroups = middleware(async ({ res, req }: IMiddlewareModel) => {
 
    const total = await GroupSchema.find().count();
 
-   itemArrayDateToJalali(groups);
+   // itemDateToJalali(groups);
    groups.map((group) => {
+      itemDateToJalali(group);
       group.videoCount = group.videoIds.length;
    });
 

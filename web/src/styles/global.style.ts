@@ -2,7 +2,7 @@ import { Input } from 'antd'
 import styled from 'styled-components'
 export const DarkBackgroundColorStyled = styled.div`
     background-color: #282828;
-    height: 250px;
+    height: 290px;
     border-radius: 10px;
     box-shadow: 0px 0px 67px 9px rgba(0,0,0,0.24);
     -webkit-box-shadow: 0px 0px 67px 9px rgba(0,0,0,0.24);

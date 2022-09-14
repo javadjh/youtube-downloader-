@@ -17,9 +17,14 @@ const getGroupsVideos = middleware(async ({ res, req }: IMiddlewareModel) => {
       videoIds: { $slice: [skipQuery, skipQuery + eachPerPage] },
    }).populate('videoIds');
 
+   let groupInstance = await GroupSchema.findById(groupId);
+   const total: number = groupInstance.videoIds.length;
+
    return res.send({
       pageId,
       eachPerPage,
+      total,
+      groupId,
       videos: group.videoIds,
    });
 });
