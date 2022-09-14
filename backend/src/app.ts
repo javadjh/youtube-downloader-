@@ -14,7 +14,7 @@ env();
 
 (async () => {
    const app = express();
-   const port = process?.env?.SERVER_PORT || 4400;
+   const port = process?.env?.SERVER_PORT || 5500;
 
    await connect();
 

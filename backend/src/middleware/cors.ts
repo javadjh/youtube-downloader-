@@ -22,7 +22,7 @@ import { Request } from 'express';
 const whitelist = [
    '192.168.1.34:3000',
    '192.168.1.34:3100',
-   '192.168.1.34:4400',
+   '192.168.1.34:5500',
 ];
 export const CorsMiddleware = cors((req: Request, handler) => {
    let options;
