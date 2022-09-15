@@ -1,5 +1,5 @@
 
-const BASE_URL = `http://localhost:5500/api/v1`
+const BASE_URL = `http://116.202.210.69:5500/api/v1`
 export const videoInfoAPI = BASE_URL + "/fetch/video/info"
 export const getItagsVideoLinkAPI = BASE_URL + "/video/link/"
 export const getVideosAPI = BASE_URL + "/videos"
