@@ -48,7 +48,7 @@ const getVideoInformation = middleware(
             let dis = await downloadImage(video.image);
             video.image =
                'http://5.75.132.228:5500/upload/' +
-               dis.substring(dis.lastIndexOf('\\') + 1, dis.length);
+               dis.substring(dis.lastIndexOf('/') + 1, dis.length);
             return res.send(video);
          }
    
@@ -85,7 +85,7 @@ const getVideoInformation = middleware(
             let dis = await downloadImage(video.image);
             video.image =
                'http://5.75.132.228:5500/upload/' +
-               dis.substring(dis.lastIndexOf('\\') + 1, dis.length);
+               dis.substring(dis.lastIndexOf('/') + 1, dis.length);
             res.send(video);
          }
       }catch(err){
