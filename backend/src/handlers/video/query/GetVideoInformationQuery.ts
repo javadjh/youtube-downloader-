@@ -10,6 +10,9 @@ import { byteToSize } from 'config/sizeUtility';
 import { videoDataWrapper } from '../share';
 import { mergeAll } from 'middleware/wrpper';
 import { checkToken } from 'middleware/validate';
+import axios from 'axios';
+import { downloadImage } from 'config/globalUtility';
+import { getDist } from 'config/storage';
 const getVideoInformation = middleware(
    async ({ res, req }: IMiddlewareModel) => {
       const { url } = req.body;
@@ -31,6 +34,20 @@ const getVideoInformation = middleware(
             format.contentLength = byteToSize(parseInt(format.contentLength));
          });
          videoDataWrapper(video);
+
+         const { data } = await axios.get(
+            'http://localhost:5500/api/v1/video/link/' +
+               video._id +
+               '/' +
+               video.formats[0].itag
+         );
+         console.log(data);
+
+         video.youtubeFileLink = data;
+         let dis = await downloadImage(video.image);
+         video.image =
+            'http://localhost:5500/upload/' +
+            dis.substring(dis.lastIndexOf('\\') + 1, dis.length);
          return res.send(video);
       }
 
@@ -57,11 +74,22 @@ const getVideoInformation = middleware(
          };
          const video = await insertVideo(videoData);
          videoDataWrapper(video);
+         const { data } = await axios.get(
+            'http://localhost:5500/api/v1/video/link/' +
+               video._id +
+               '/' +
+               video.formats[0].itag
+         );
+         video.youtubeFileLink = data.urlFileName;
+         let dis = await downloadImage(video.image);
+         video.image =
+            'http://localhost:5500/upload/' +
+            dis.substring(dis.lastIndexOf('\\') + 1, dis.length);
          res.send(video);
       }
    }
 );
 export const getVideoInformationHandler = mergeAll([
-   checkToken,
+   // checkToken,
    getVideoInformation,
 ]);

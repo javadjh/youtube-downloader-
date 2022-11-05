@@ -15,6 +15,9 @@ export interface IVideo extends IBase {
    videoUrl?: string;
    url?: string;
    files?: Array<IFile>;
+
+   //req
+   youtubeFileLink?: string;
 }
 export interface IFile {
    itag?: string;

@@ -8,7 +8,7 @@ const UploaderComponent :React.FC<IUploaderComponent> = ({children,onUploaded})=
     const props: UploadProps = {
         name: 'file',
         showUploadList:false,
-        action: 'http://116.202.210.69:5500/api/v1/insert/group',
+        action: 'http://localhost:5500/api/v1/insert/group',
         headers: {
         token: `${localStorage.getItem("token")}`,
         },

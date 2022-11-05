@@ -1,3 +1,5 @@
+import download from 'image-downloader';
+import { getDist } from './storage';
 interface IFilterQuery {
    pageId: number;
    eachPerPage: number;
@@ -20,3 +22,10 @@ export const filterQuery = (req): IFilterQuery => {
       skipQuery: (pageId - 1) * eachPerPage,
    };
 };
+export async function downloadImage(url: string) {
+   let filename = await download.image({
+      url,
+      dest: getDist(),
+   });
+   return filename.filename;
+}

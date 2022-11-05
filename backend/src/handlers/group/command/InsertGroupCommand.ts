@@ -53,7 +53,7 @@ const insertGroup = middleware(async ({ res, req }: IMiddlewareModel) => {
       for (let j = 0; j < parts[i].links.length; j++) {
          const link = parts[i].links[j];
          const { data } = await axios.post(
-            'http://116.202.210.69:5500/api/v1/fetch/video/info',
+            'http://localhost:5500/api/v1/fetch/video/info',
             {
                url: link,
             },
@@ -64,7 +64,7 @@ const insertGroup = middleware(async ({ res, req }: IMiddlewareModel) => {
             }
          );
          // await axios.get(
-         //    `http://116.202.210.69:5500/api/v1/video/link/${data._id}/${data.formats[0].itag}`,
+         //    `http://localhost:5500/api/v1/video/link/${data._id}/${data.formats[0].itag}`,
          //    {
          //       headers: {
          //          token: `${req?.headers?.token}`,
