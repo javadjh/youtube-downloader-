@@ -15,78 +15,84 @@ import { downloadImage } from 'config/globalUtility';
 import { getDist } from 'config/storage';
 const getVideoInformation = middleware(
    async ({ res, req }: IMiddlewareModel) => {
-      const { url } = req.body;
-      if (!url) throw new HandledError(CANT_DO_ERROR_MESSAGE);
-      //https://www.youtube.com/watch?v=126qo59GUko =>example
-      //https://www.youtube.com/watch?v=bsXaM4G4D_w&list=PLwQLA73lSe1RfjMzbRLoIkcIJBu25FnVJ =>example
-      let endIndex = url.indexOf('&');
-
-      const videoId = url.substring(
-         url.indexOf('v=') + 2,
-         endIndex === -1 ? url.length : url.indexOf('&')
-      );
-
-      const video: IVideo = await VideoSchema.findOne({
-         url,
-      }).lean();
-      if (video?._id) {
-         video.formats.map((format) => {
-            format.contentLength = byteToSize(parseInt(format.contentLength));
-         });
-         videoDataWrapper(video);
-
-         const { data } = await axios.get(
-            'http://localhost:5500/api/v1/video/link/' +
-               video._id +
-               '/' +
-               video.formats[0].itag
+      try{
+         const { url } = req.body;
+         if (!url) throw new HandledError(CANT_DO_ERROR_MESSAGE);
+         //https://www.youtube.com/watch?v=126qo59GUko =>example
+         //https://www.youtube.com/watch?v=bsXaM4G4D_w&list=PLwQLA73lSe1RfjMzbRLoIkcIJBu25FnVJ =>example
+         let endIndex = url.indexOf('&');
+   
+         const videoId = url.substring(
+            url.indexOf('v=') + 2,
+            endIndex === -1 ? url.length : url.indexOf('&')
          );
-         console.log(data);
-
-         video.youtubeFileLink = data;
-         let dis = await downloadImage(video.image);
-         video.image =
-            'http://localhost:5500/upload/' +
-            dis.substring(dis.lastIndexOf('\\') + 1, dis.length);
-         return res.send(video);
-      }
-
-      let info: any = await ytdl.getBasicInfo(videoId, {});
-
-      if (info.player_response.playabilityStatus.status === 'OK') {
-         let { title, videoId, lengthSeconds, shortDescription, viewCount } =
-            info.player_response.videoDetails;
-         let thumbnails =
-            info.player_response.videoDetails?.thumbnail?.thumbnails;
-
-         let videoData: IVideo = {
+   
+         const video: IVideo = await VideoSchema.findOne({
             url,
-            title,
-            description: shortDescription,
-            image: thumbnails[thumbnails.length - 1].url,
-            videoId,
-            videoLength: lengthSeconds,
-            profile: info.videoDetails.ownerProfileUrl,
-            category: info.videoDetails.category,
-            publishDate: info.videoDetails.publishDate,
-            viewCount,
-            formats: info.formats,
-         };
-         const video = await insertVideo(videoData);
-         videoDataWrapper(video);
-         const { data } = await axios.get(
-            'http://localhost:5500/api/v1/video/link/' +
-               video._id +
-               '/' +
-               video.formats[0].itag
-         );
-         video.youtubeFileLink = data.urlFileName;
-         let dis = await downloadImage(video.image);
-         video.image =
-            'http://localhost:5500/upload/' +
-            dis.substring(dis.lastIndexOf('\\') + 1, dis.length);
-         res.send(video);
+         }).lean();
+         if (video?._id) {
+            video.formats.map((format) => {
+               format.contentLength = byteToSize(parseInt(format.contentLength));
+            });
+            videoDataWrapper(video);
+   
+            const { data } = await axios.get(
+               'http://5.75.132.228:5500/api/v1/video/link/' +
+                  video._id +
+                  '/' +
+                  video.formats[0].itag
+            );
+            console.log(data);
+   
+            video.youtubeFileLink = data;
+            let dis = await downloadImage(video.image);
+            video.image =
+               'http://5.75.132.228:5500/upload/' +
+               dis.substring(dis.lastIndexOf('\\') + 1, dis.length);
+            return res.send(video);
+         }
+   
+         let info: any = await ytdl.getBasicInfo(videoId, {});
+   
+         if (info.player_response.playabilityStatus.status === 'OK') {
+            let { title, videoId, lengthSeconds, shortDescription, viewCount } =
+               info.player_response.videoDetails;
+            let thumbnails =
+               info.player_response.videoDetails?.thumbnail?.thumbnails;
+   
+            let videoData: IVideo = {
+               url,
+               title,
+               description: shortDescription,
+               image: thumbnails[thumbnails.length - 1].url,
+               videoId,
+               videoLength: lengthSeconds,
+               profile: info.videoDetails.ownerProfileUrl,
+               category: info.videoDetails.category,
+               publishDate: info.videoDetails.publishDate,
+               viewCount,
+               formats: info.formats,
+            };
+            const video = await insertVideo(videoData);
+            videoDataWrapper(video);
+            const { data } = await axios.get(
+               'http://5.75.132.228:5500/api/v1/video/link/' +
+                  video._id +
+                  '/' +
+                  video.formats[0].itag
+            );
+            video.youtubeFileLink = data.urlFileName;
+            let dis = await downloadImage(video.image);
+            video.image =
+               'http://5.75.132.228:5500/upload/' +
+               dis.substring(dis.lastIndexOf('\\') + 1, dis.length);
+            res.send(video);
+         }
+      }catch(err){
+         console.log(err);
+         
       }
+      
    }
 );
 export const getVideoInformationHandler = mergeAll([

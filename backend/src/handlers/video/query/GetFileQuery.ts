@@ -94,7 +94,7 @@ const getFileName = (format: videoFormat): any => {
 
    let name = Date.now() + format.itag + `.${ex}`;
    let fileName = getDist() + '/' + name;
-   let urlFileName = `http://localhost:5500/upload/${name}`;
+   let urlFileName = `http://5.75.132.228:5500/upload/${name}`;
    return { fileName, urlFileName };
 };
 export const getFileQueryHandler = mergeAll([

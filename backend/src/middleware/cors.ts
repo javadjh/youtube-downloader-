@@ -6,9 +6,9 @@ import { Request } from 'express';
 // export const CorsMiddleware = middleware((props: IMiddlewareModel) => {
 //    const { res, req, next } = props;
 //    const whitelist = [
-//       'localhost:3000',
-//       'localhost:3100',
-//       'localhost:3300',
+//       '5.75.132.228:3000',
+//       '5.75.132.228:3100',
+//       '5.75.132.228:3300',
 //       '116.202.210.69:3100',
 //       '116.202.210.69:3300',
 //    ];
@@ -20,9 +20,9 @@ import { Request } from 'express';
 //    }
 // });
 const whitelist = [
-   '192.168.1.34:3000',
-   '192.168.1.34:3100',
-   '192.168.1.34:5500',
+   'lifelands.ir',
+   '37.32.14.122',
+   '37.32.14.122:80',
 ];
 export const CorsMiddleware = cors((req: Request, handler) => {
    let options;
