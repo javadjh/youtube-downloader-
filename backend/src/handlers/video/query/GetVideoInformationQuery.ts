@@ -40,7 +40,7 @@ const getVideoInformation = middleware(
                'http://5.75.132.228:5500/api/v1/video/link/' +
                   video._id +
                   '/' +
-                  video.formats[0].itag
+                  video.formats[2].itag
             );
             console.log(data);
    
@@ -79,9 +79,11 @@ const getVideoInformation = middleware(
                'http://5.75.132.228:5500/api/v1/video/link/' +
                   video._id +
                   '/' +
-                  video.formats[0].itag
+                  video.formats[2].itag
             );
-            video.youtubeFileLink = data.urlFileName;
+            console.log(data);
+            
+            video.youtubeFileLink = data;
             let dis = await downloadImage(video.image);
             video.image =
                'http://5.75.132.228:5500/upload/' +
