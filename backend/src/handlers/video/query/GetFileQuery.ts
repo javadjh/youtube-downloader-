@@ -32,14 +32,14 @@ export const getFileQuery = middleware(
                formatObject = format;
             }
          });
-         await getFile(formatObject, video, res);
+         await getFile(formatObject, video, res,req);
       } catch (error) {
          console.log(error);
       }
    }
 );
 
-const getFile = async (format: videoFormat, videoData: any, res) => {
+const getFile = async (format: videoFormat, videoData: any, res,req:any) => {
    let { fileName, urlFileName } = getFileName(format);
 
    const video = ytdl(videoData.url);
@@ -68,6 +68,18 @@ const getFile = async (format: videoFormat, videoData: any, res) => {
       process.stdout.write(
          `, estimated time left: ${estimatedDownloadTime.toFixed(2)}minutes `
       );
+
+      //write in res download prossess
+      let progress = 0;
+      const file_size = req.headers['content-length'];
+
+      // set event listener
+      req.on('data', (chunk) => {
+         progress += chunk.length;
+         const percentage = (progress / file_size) * 100;
+         console.log(percentage);
+      });
+
       readline.moveCursor(process.stdout, 0, -1);
    });
    video.on('end', async () => {

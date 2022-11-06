@@ -79,7 +79,26 @@ const getVideoInformation = middleware(
                'http://5.75.132.228:5500/api/v1/video/link/' +
                   video._id +
                   '/' +
-                  video.formats[2].itag
+                  video.formats[2].itag,{
+                     onUploadProgress: (progressEvent) => {
+                        var percentCompleted = Math.round(
+                          (progressEvent.loaded * 100) / progressEvent.total
+                        );
+                        console.log("test*****************");
+                        console.log(percentCompleted);
+                        
+                        let progress = 0;
+                        const file_size = req.headers['content-length'];
+
+                        // set event listener
+                        req.on('data', (chunk) => {
+                           progress += chunk.length;
+                           const percentage = (progress / Number(`${file_size}`)) * 100;
+                           console.log(percentage);
+                           // other code ...
+                        });
+                      },
+                  }
             );
             console.log(data);
             
