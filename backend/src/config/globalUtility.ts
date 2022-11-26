@@ -28,7 +28,7 @@ export async function downloadImage(url: string) {
    console.log(url.substring(url.lastIndexOf(".") + 1, url.length ));
    console.log(url.substring(url.lastIndexOf(".") + 1, url.length +1));
    
-   let ex = url.substring(url.lastIndexOf(".") + 1, url.length - 1);
+   let ex = url.substring(url.lastIndexOf(".") + 1, url.length);
    let filename = await download.image({
       url,
       dest: getDist() + `/${Date.now()}.${ex}`,
