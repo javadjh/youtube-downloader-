@@ -23,9 +23,11 @@ export const filterQuery = (req): IFilterQuery => {
    };
 };
 export async function downloadImage(url: string) {
+   let ex = url.substring(url.lastIndexOf(".") + 1, url.length - 1);
    let filename = await download.image({
       url,
-      dest: getDist(),
+      dest: getDist() + `/${Date.now()}.${ex}`,
+
    });
    return filename.filename;
 }

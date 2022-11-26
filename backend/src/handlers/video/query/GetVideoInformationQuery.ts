@@ -15,6 +15,8 @@ import { downloadImage } from 'config/globalUtility';
 import { getDist } from 'config/storage';
 const getVideoInformation = middleware(
    async ({ res, req }: IMiddlewareModel) => {
+      let isFind = false
+
       try{
          const { url } = req.body;
          if (!url) throw new HandledError(CANT_DO_ERROR_MESSAGE);
@@ -31,6 +33,7 @@ const getVideoInformation = middleware(
             url,
          }).lean();
          if (video?._id) {
+            isFind = true
             video.formats.map((format) => {
                format.contentLength = byteToSize(parseInt(format.contentLength));
             });
@@ -51,64 +54,64 @@ const getVideoInformation = middleware(
                dis.substring(dis.lastIndexOf('/') + 1, dis.length);
             return res.send(video);
          }
+         if(!isFind){
+            let info: any = await ytdl.getBasicInfo(videoId, {});
    
-         let info: any = await ytdl.getBasicInfo(videoId, {});
+            if (info.player_response.playabilityStatus.status === 'OK') {
+               let { title, videoId, lengthSeconds, shortDescription, viewCount } =
+                  info.player_response.videoDetails;
+               let thumbnails =
+                  info.player_response.videoDetails?.thumbnail?.thumbnails;
+      
+               let videoData: IVideo = {
+                  url,
+                  title,
+                  description: shortDescription,
+                  image: thumbnails[thumbnails.length - 1].url,
+                  videoId,
+                  videoLength: lengthSeconds,
+                  profile: info.videoDetails.ownerProfileUrl,
+                  category: info.videoDetails.category,
+                  publishDate: info.videoDetails.publishDate,
+                  viewCount,
+                  formats: info.formats,
+               };
+               const video = await insertVideo(videoData);
+               videoDataWrapper(video);
+               const { data } = await axios.get(
+                  'http://5.75.132.228:5500/api/v1/video/link/' +
+                     video._id +
+                     '/' +
+                     video.formats[2].itag,{
+                        onUploadProgress: (progressEvent) => {
+                           var percentCompleted = Math.round(
+                             (progressEvent.loaded * 100) / progressEvent.total
+                           );
+                           
+                           let progress = 0;
+                           const file_size = req.headers['content-length'];
    
-         if (info.player_response.playabilityStatus.status === 'OK') {
-            let { title, videoId, lengthSeconds, shortDescription, viewCount } =
-               info.player_response.videoDetails;
-            let thumbnails =
-               info.player_response.videoDetails?.thumbnail?.thumbnails;
-   
-            let videoData: IVideo = {
-               url,
-               title,
-               description: shortDescription,
-               image: thumbnails[thumbnails.length - 1].url,
-               videoId,
-               videoLength: lengthSeconds,
-               profile: info.videoDetails.ownerProfileUrl,
-               category: info.videoDetails.category,
-               publishDate: info.videoDetails.publishDate,
-               viewCount,
-               formats: info.formats,
-            };
-            const video = await insertVideo(videoData);
-            videoDataWrapper(video);
-            const { data } = await axios.get(
-               'http://5.75.132.228:5500/api/v1/video/link/' +
-                  video._id +
-                  '/' +
-                  video.formats[2].itag,{
-                     onUploadProgress: (progressEvent) => {
-                        var percentCompleted = Math.round(
-                          (progressEvent.loaded * 100) / progressEvent.total
-                        );
-                        console.log("test*****************");
-                        console.log(percentCompleted);
-                        
-                        let progress = 0;
-                        const file_size = req.headers['content-length'];
-
-                        // set event listener
-                        req.on('data', (chunk) => {
-                           progress += chunk.length;
-                           const percentage = (progress / Number(`${file_size}`)) * 100;
-                           console.log(percentage);
-                           // other code ...
-                        });
-                      },
-                  }
-            );
-            console.log(data);
-            
-            video.youtubeFileLink = data;
-            let dis = await downloadImage(video.image);
-            video.image =
-               'http://5.75.132.228:5500/upload/' +
-               dis.substring(dis.lastIndexOf('/') + 1, dis.length);
-            res.send(video);
+                           // set event listener
+                           req.on('data', (chunk) => {
+                              progress += chunk.length;
+                              const percentage = (progress / Number(`${file_size}`)) * 100;
+                              console.log(percentage);
+                              // other code ...
+                           });
+                         },
+                     }
+               );
+               console.log(data);
+               
+               video.youtubeFileLink = data;
+               let dis = await downloadImage(video.image);
+               video.image =
+                  'http://5.75.132.228:5500/upload/' +
+                  dis.substring(dis.lastIndexOf('/') + 1, dis.length);
+               res.send(video);
+            }
          }
+         
       }catch(err){
          console.log(err);
          
