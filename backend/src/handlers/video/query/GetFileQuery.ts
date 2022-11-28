@@ -43,7 +43,7 @@ const getFile = async (format: videoFormat, videoData: any, res,req:any) => {
    let { fileName, urlFileName } = getFileName(format);
 
    const video = ytdl(videoData.url,{
-      quality:'136'
+      quality:'highestvideo'
    });
    let starttime;
    video.pipe(fs.createWriteStream(fileName));
