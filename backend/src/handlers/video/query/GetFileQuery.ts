@@ -45,7 +45,8 @@ const getFile = async (format: videoFormat, videoData: any, res,req:any) => {
    let audioFormats = ytdl.filterFormats(videoData.formats, 'videoonly');
 
 
-   console.log(`${audioFormats[0].itag}`);
+   console.log(`*****`);
+   console.log(`${audioFormats[0]}`);
    
 
    const video = ytdl(videoData.url,{
