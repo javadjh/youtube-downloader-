@@ -41,7 +41,7 @@
       "swagger-jsdoc": "^6.2.1",
       "swagger-ui-express": "^4.5.0",
       "ts-node": "^10.9.1",
-      "ytdl-core": "^4.11.2"
+      "ytdl-core": "https://github.com/khlevon/node-ytdl-core.git#v4.11.3-patch.1"
    },
    "devDependencies": {
       "@types/bcrypt": "^5.0.0",
