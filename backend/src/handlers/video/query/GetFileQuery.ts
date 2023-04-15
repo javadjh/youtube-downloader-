@@ -40,12 +40,19 @@ export const getFileQuery = middleware(
 );
 
 const getFile = async (format: videoFormat, videoData: any, res, req: any) => {
-let formate = ytdl.chooseFormat(videoData.formats, { quality: '18' });
+   let formatVideo :any = undefined
+   videoData.formats.forEach(element => {
+      if(element.mimeType.contains('mp4') && !formatVideo){
+         formatVideo = element
+      } 
+   });
+   console.log(formatVideo);
+   
    let { fileName, urlFileName } = getFileName(format);
    //filter: (format) => format.container === 'mp4',
    const video = ytdl(videoData.url, {
       
-      format:formate
+      format:formatVideo
    });
    let starttime;
    video.pipe(fs.createWriteStream(fileName));
