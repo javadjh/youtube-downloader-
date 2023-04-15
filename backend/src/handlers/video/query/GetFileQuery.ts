@@ -113,6 +113,5 @@ const getFileName = (format: videoFormat): any => {
    return { fileName, urlFileName };
 };
 export const getFileQueryHandler = mergeAll([
-   // checkToken,
    getFileQuery,
 ]);
