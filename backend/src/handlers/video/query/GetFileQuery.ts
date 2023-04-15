@@ -44,7 +44,7 @@ const getFile = async (format: videoFormat, videoData: any, res, req: any) => {
    videoData.formats.forEach(element => {
       console.log(element);
       
-      if(element.mimeType.contains('mp4') && !formatVideo){
+      if(element.mimeType.includes('mp4') && !formatVideo){
          formatVideo = element
       } 
    });
