@@ -19,11 +19,7 @@ import { Request } from 'express';
 //    if (whitelist.indexOf(origin) !== -1) {
 //    }
 // });
-const whitelist = [
-   'lifelands.ir',
-   '37.32.14.122',
-   '37.32.14.122:80',
-];
+const whitelist = ['lifelands.ir', '37.32.14.122', '37.32.14.122:80'];
 export const CorsMiddleware = cors((req: Request, handler) => {
    let options;
 
