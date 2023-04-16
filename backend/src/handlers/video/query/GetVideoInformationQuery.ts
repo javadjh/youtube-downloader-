@@ -120,7 +120,11 @@ const getVideoInformation = middleware(
                   dis.substring(dis.lastIndexOf('/') + 1, dis.length);
                   if(video.image.includes('?')){
                      fs.renameSync(`${getDist()}/${dis.substring(dis.lastIndexOf('/') + 1, dis.length)}`, dis.substring(dis.lastIndexOf('/') + 1, dis.indexOf("?")))
+                     video.image = 'http://5.75.132.228:5500/upload/' +
+                     dis.substring(dis.lastIndexOf('/') + 1, dis.indexOf("?"));
                   }
+               console.log(video.image);
+                  
                res.send(video);
             }
          }
