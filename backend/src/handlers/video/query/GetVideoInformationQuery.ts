@@ -1,3 +1,4 @@
+import * as fs from 'fs'
 import { IMiddlewareModel } from 'interfaces';
 import { middleware } from 'middleware';
 import ytdl, { videoInfo } from 'ytdl-core';
@@ -117,6 +118,9 @@ const getVideoInformation = middleware(
                video.image =
                   'http://5.75.132.228:5500/upload/' +
                   dis.substring(dis.lastIndexOf('/') + 1, dis.length);
+                  if(video.image.includes('?')){
+                     fs.renameSync(`${getDist()}/${dis.substring(dis.lastIndexOf('/') + 1, dis.length)}`, dis.substring(dis.lastIndexOf('/') + 1, dis.indexOf("?")))
+                  }
                res.send(video);
             }
          }
