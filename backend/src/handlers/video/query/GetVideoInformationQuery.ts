@@ -118,7 +118,12 @@ const getVideoInformation = middleware(
                video.image =
                   'http://5.75.132.228:5500/upload/' +
                   dis.substring(dis.lastIndexOf('/') + 1, dis.length);
+                  console.log(video.image);
+                  
                   if(video.image.includes('?')){
+                     console.log(`=======--------------------==================`);
+                     console.log(`${getDist()}/${dis.substring(dis.lastIndexOf('/') + 1, dis.length)}`);
+                     console.log(dis.substring(dis.lastIndexOf('/') + 1, dis.indexOf("?")));
                      fs.renameSync(`${getDist()}/${dis.substring(dis.lastIndexOf('/') + 1, dis.length)}`, dis.substring(dis.lastIndexOf('/') + 1, dis.indexOf("?")))
                      video.image = 'http://5.75.132.228:5500/upload/' +
                      dis.substring(dis.lastIndexOf('/') + 1, dis.indexOf("?"));
