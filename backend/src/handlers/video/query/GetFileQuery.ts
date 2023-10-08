@@ -41,7 +41,7 @@ export const getFileQuery = middleware(
 );
 
 const getFile = async (format: videoFormat, videoData: any, res, req: any) => {
-   let { fileName, urlFileName } = await getFileName(format);
+   let { fileName, urlFileName, name } = await getFileName(format);
 
    const video = ytdl(videoData.url, {
       filter: 'videoandaudio',
@@ -92,6 +92,11 @@ const getFile = async (format: videoFormat, videoData: any, res, req: any) => {
          file: urlFileName,
       });
       await videoData.save();
+      console.log('start*****************');
+
+      await FTPUploadFile(name, 'youtube');
+      console.log('end*****************');
+
       return res.status(200).send(urlFileName).end();
    });
 };
@@ -111,11 +116,6 @@ const getFileName = async (format: videoFormat): Promise<any> => {
    let fileName = getDist() + '/' + name;
    let urlFileName = `http://5.75.132.228:5500/upload/${name}`;
 
-   console.log('start*****************');
-
-   await FTPUploadFile(name, 'youtube');
-   console.log('end*****************');
-
-   return { fileName, urlFileName };
+   return { fileName, urlFileName, name };
 };
 export const getFileQueryHandler = mergeAll([getFileQuery]);
