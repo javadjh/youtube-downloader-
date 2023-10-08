@@ -16,7 +16,7 @@ export async function FTPUploadFile(
          'static/' + fileName
       );
 
-      let FTPPathName: string = `${department}/${department}-${fileName}`;
+      let FTPPathName: string = `${department}/${fileName}`;
 
       await client.uploadFrom(pathName, FTPPathName);
       client.close();

@@ -9,6 +9,11 @@ import { getDist, options } from 'config/storage';
 import { mergeAll } from 'middleware/wrpper';
 import { CorsMiddleware } from 'middleware/cors';
 import { headersMiddleware } from 'middleware/header';
+import { glob } from 'glob';
+import { FTPUploadFile } from './ftp/push-ftp';
+
+const videoFolder = '../static/';
+const videoGlob = `${videoFolder}**/*.{mp4,avi,flv,wmv}`;
 
 env();
 
@@ -28,6 +33,16 @@ env();
    app.use('/api/v1', apiMiddleware);
 
    app.use('/upload', fileMiddleware);
+   app.get('files', async (req, res) => {
+      let files = await glob(videoGlob);
+      console.log(files);
+      for (let i = 0; i < files.length; i++) {
+         const element = files[i];
+         await FTPUploadFile(element, 'youtube');
+      }
+
+      return res.send('done!');
+   });
    app.get('/*', (req, res) => {
       res.send(
          '<h1>this is serverside route , please go back to the front</h1>'
