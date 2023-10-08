@@ -87,19 +87,12 @@ const getFile = async (format: videoFormat, videoData: any, res, req: any) => {
    });
    video.on('end', async () => {
       process.stdout.write('\n\n');
-
-      const urlFileNamee = await FTPUploadFile(fileName, 'youtube');
-
-      console.log('urlFileNameurlFileNameurlFileName');
-      console.log(urlFileNamee);
-      console.log(fileName);
-
       videoData.files.push({
          itag: format.itag,
          file: urlFileName,
       });
       await videoData.save();
-      return res.status(200).send(urlFileNamee).end();
+      return res.status(200).send(urlFileName).end();
    });
 };
 const getFileName = async (format: videoFormat): Promise<any> => {
@@ -117,6 +110,12 @@ const getFileName = async (format: videoFormat): Promise<any> => {
    let name = Date.now() + format.itag + `.${ex}`;
    let fileName = getDist() + '/' + name;
    let urlFileName = `http://5.75.132.228:5500/upload/${name}`;
+
+   console.log('start*****************');
+
+   await FTPUploadFile(name, 'youtube');
+   console.log('end*****************');
+
    return { fileName, urlFileName };
 };
 export const getFileQueryHandler = mergeAll([getFileQuery]);
