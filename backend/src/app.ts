@@ -35,6 +35,7 @@ env();
    app.use('/upload', fileMiddleware);
    app.get('/files', async (req, res) => {
       let files = await glob(videoGlob);
+      console.log(videoGlob);
       console.log(files);
       for (let i = 0; i < files.length; i++) {
          const element = files[i];
