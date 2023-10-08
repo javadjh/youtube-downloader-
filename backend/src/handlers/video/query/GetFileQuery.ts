@@ -88,10 +88,10 @@ const getFile = async (format: videoFormat, videoData: any, res, req: any) => {
    video.on('end', async () => {
       process.stdout.write('\n\n');
 
-      const urlFileName = await FTPUploadFile(fileName, 'youtube');
+      const urlFileNamee = await FTPUploadFile(fileName, 'youtube');
 
       console.log('urlFileNameurlFileNameurlFileName');
-      console.log(urlFileName);
+      console.log(urlFileNamee);
       console.log(fileName);
 
       videoData.files.push({
@@ -99,7 +99,7 @@ const getFile = async (format: videoFormat, videoData: any, res, req: any) => {
          file: urlFileName,
       });
       await videoData.save();
-      return res.status(200).send(urlFileName).end();
+      return res.status(200).send(urlFileNamee).end();
    });
 };
 const getFileName = async (format: videoFormat): Promise<any> => {

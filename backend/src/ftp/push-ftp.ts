@@ -18,10 +18,13 @@ export async function FTPUploadFile(
 
       let FTPPathName: string = `${department}/${department}-${fileName}`;
 
+      console.log(pathName);
+      console.log(FTPPathName);
+
       await client.uploadFrom(pathName, FTPPathName);
       client.close();
 
-      fs.unlinkSync(pathName);
+      // fs.unlinkSync(pathName);
 
       return FTPPathName;
    } catch (err) {
