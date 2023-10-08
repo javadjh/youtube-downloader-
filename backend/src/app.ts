@@ -11,9 +11,12 @@ import { CorsMiddleware } from 'middleware/cors';
 import { headersMiddleware } from 'middleware/header';
 import { glob } from 'glob';
 import { FTPUploadFile } from './ftp/push-ftp';
+import path from 'path';
 
-const videoFolder = '../static/';
-const videoGlob = `${videoFolder}*.mp4`;
+const videoFolder = path.resolve(__dirname, '../', 'static/');
+const videoGlob = `${videoFolder}/*.mp4`;
+
+console.log(videoGlob);
 
 env();
 
