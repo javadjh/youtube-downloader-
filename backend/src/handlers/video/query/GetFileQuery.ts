@@ -12,6 +12,7 @@ import readline from 'readline';
 import { getDist } from 'config/storage';
 import { mergeAll } from 'middleware/wrpper';
 import { checkToken } from 'middleware/validate';
+import { FTPUploadFile } from '../../../ftp/push-ftp';
 export const getFileQuery = middleware(
    async ({ res, req }: IMiddlewareModel) => {
       const { id, itag } = req.params;
@@ -40,8 +41,8 @@ export const getFileQuery = middleware(
 );
 
 const getFile = async (format: videoFormat, videoData: any, res, req: any) => {
-   let { fileName, urlFileName } = getFileName(format);
-   
+   let { fileName, urlFileName } = await getFileName(format);
+
    const video = ytdl(videoData.url, {
       filter: 'videoandaudio',
    });
@@ -86,6 +87,14 @@ const getFile = async (format: videoFormat, videoData: any, res, req: any) => {
    });
    video.on('end', async () => {
       process.stdout.write('\n\n');
+
+      const urlFileName = await FTPUploadFile(fileName, 'youtube');
+
+      console.log('urlFileNameurlFileNameurlFileName');
+      console.log(urlFileName);
+      console.log(name);
+      console.log(fileName);
+
       videoData.files.push({
          itag: format.itag,
          file: urlFileName,
@@ -94,7 +103,7 @@ const getFile = async (format: videoFormat, videoData: any, res, req: any) => {
       return res.status(200).send(urlFileName).end();
    });
 };
-const getFileName = (format: videoFormat): any => {
+const getFileName = async (format: videoFormat): Promise<any> => {
    let mime = format.mimeType;
    let ex = mime.includes('video/mp4;')
       ? 'mp4'
@@ -111,6 +120,4 @@ const getFileName = (format: videoFormat): any => {
    let urlFileName = `http://5.75.132.228:5500/upload/${name}`;
    return { fileName, urlFileName };
 };
-export const getFileQueryHandler = mergeAll([
-   getFileQuery,
-]);
+export const getFileQueryHandler = mergeAll([getFileQuery]);

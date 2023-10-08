@@ -32,8 +32,10 @@ export async function downloadImage(url: string) {
       url,
       dest: getDist() + `/${Date.now()}${ex}`,
    });
-   console.log("filenamefilenamefilenamefilenamefilenamefilenamefilenamefilenamefilenamefilename");
+   console.log(
+      'filenamefilenamefilenamefilenamefilenamefilenamefilenamefilenamefilenamefilename'
+   );
    console.log(filename);
-   
+
    return filename.filename;
 }

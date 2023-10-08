@@ -1,4 +1,4 @@
-import * as fs from 'fs'
+import * as fs from 'fs';
 import { IMiddlewareModel } from 'interfaces';
 import { middleware } from 'middleware';
 import ytdl, { videoInfo } from 'ytdl-core';
@@ -58,7 +58,10 @@ const getVideoInformation = middleware(
             return res.send(video);
          }
          if (!isFind) {
+            console.log('111111111111111111');
+            console.log(videoId);
             let info: any = await ytdl.getBasicInfo(videoId, {});
+            console.log(info);
 
             if (info.player_response.playabilityStatus.status === 'OK') {
                let {
@@ -84,6 +87,7 @@ const getVideoInformation = middleware(
                   viewCount,
                   formats: info.formats,
                };
+
                const video = await insertVideo(videoData);
                videoDataWrapper(video);
                const { data } = await axios.get(
@@ -118,18 +122,21 @@ const getVideoInformation = middleware(
                video.image =
                   'http://5.75.132.228:5500/upload/' +
                   dis.substring(dis.lastIndexOf('/') + 1, dis.length);
-                  console.log(video.image);
-                  
-                  if(video.image.includes('?')){
-                     console.log(`=======--------------------==================`);
-                     console.log(`${getDist()}/${dis.substring(dis.lastIndexOf('/') + 1, dis.length)}`);
-                     console.log(dis.substring(dis.lastIndexOf('/') + 1, dis.indexOf("?")));
-                     fs.renameSync(`${getDist()}/${dis.substring(dis.lastIndexOf('/') + 1, dis.length)}`, dis.substring(dis.lastIndexOf('/') + 1, dis.indexOf("?")))
-                     video.image = 'http://5.75.132.228:5500/upload/' +
-                     dis.substring(dis.lastIndexOf('/') + 1, dis.indexOf("?"));
-                  }
+
+               if (video.image.includes('?')) {
+                  fs.renameSync(
+                     `${getDist()}/${dis.substring(
+                        dis.lastIndexOf('/') + 1,
+                        dis.length
+                     )}`,
+                     dis.substring(dis.lastIndexOf('/') + 1, dis.indexOf('?'))
+                  );
+                  video.image =
+                     'http://5.75.132.228:5500/upload/' +
+                     dis.substring(dis.lastIndexOf('/') + 1, dis.indexOf('?'));
+               }
                console.log(video.image);
-                  
+
                res.send(video);
             }
          }
