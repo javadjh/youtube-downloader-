@@ -13,7 +13,7 @@ import { glob } from 'glob';
 import { FTPUploadFile } from './ftp/push-ftp';
 
 const videoFolder = '../static/';
-const videoGlob = `${videoFolder}*.{mp4,avi,flv,wmv}`;
+const videoGlob = `${videoFolder}*.mp4`;
 
 env();
 
