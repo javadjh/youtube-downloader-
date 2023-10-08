@@ -92,7 +92,6 @@ const getFile = async (format: videoFormat, videoData: any, res, req: any) => {
 
       console.log('urlFileNameurlFileNameurlFileName');
       console.log(urlFileName);
-      console.log(name);
       console.log(fileName);
 
       videoData.files.push({
