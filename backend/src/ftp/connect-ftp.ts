@@ -8,6 +8,8 @@ const ftpConnection = async (): Promise<ftp.Client> => {
       secure: false,
    });
 
+   ftpConnection.ftp.verbose = true;
+
    await ftpConnection.cd('/domains/pz17644.parspack.net/public_html');
 
    return ftpConnection;
