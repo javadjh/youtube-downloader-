@@ -14,7 +14,7 @@ import { FTPUploadFile } from './ftp/push-ftp';
 import path from 'path';
 
 const videoFolder = path.resolve(__dirname, '../', 'static/');
-const videoGlob = `${videoFolder}/*.mp4`;
+const videoGlob = `${videoFolder}/*.webm`;
 
 console.log(videoGlob);
 
