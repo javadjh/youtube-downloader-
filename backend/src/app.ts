@@ -42,7 +42,10 @@ env();
       console.log(files);
       for (let i = 0; i < files.length; i++) {
          const element = files[i];
-         await FTPUploadFile(element, 'youtube');
+         const name = path.basename(element);
+         console.log(name);
+
+         await FTPUploadFile(name, 'youtube');
       }
 
       return res.send('done!');
