@@ -38,14 +38,11 @@ env();
    app.use('/upload', fileMiddleware);
    app.get('/files', async (req, res) => {
       let files = await glob(videoGlob);
-      console.log(videoGlob);
-      console.log(files);
       for (let i = 0; i < files.length; i++) {
          const element = files[i];
          const name = path.basename(element);
-         console.log(name);
 
-         await FTPUploadFile(name, 'youtube');
+         await FTPUploadFile(name, 'video');
       }
 
       return res.send('done!');

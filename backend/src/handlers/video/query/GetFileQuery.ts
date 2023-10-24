@@ -94,7 +94,7 @@ const getFile = async (format: videoFormat, videoData: any, res, req: any) => {
       await videoData.save();
       console.log('start*****************');
 
-      await FTPUploadFile(name, 'youtube');
+      await FTPUploadFile(name, 'video');
       console.log('end*****************');
 
       return res.status(200).send(urlFileName).end();
@@ -114,7 +114,7 @@ const getFileName = async (format: videoFormat): Promise<any> => {
 
    let name = Date.now() + format.itag + `.${ex}`;
    let fileName = getDist() + '/' + name;
-   let urlFileName = `http://5.75.132.228:5500/upload/${name}`;
+   let urlFileName = `http://dl.lifelands.ir/video/${name}`;
 
    return { fileName, urlFileName, name };
 };
