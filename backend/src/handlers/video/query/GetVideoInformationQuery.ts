@@ -53,7 +53,7 @@ const getVideoInformation = middleware(
             video.youtubeFileLink = data;
             let dis = await downloadImage(video.image);
             video.image =
-               'http://dl.lifelands.ir/video/' +
+               'http://5.75.132.228:5500/upload/' +
                dis.substring(dis.lastIndexOf('/') + 1, dis.length);
             return res.send(video);
          }
