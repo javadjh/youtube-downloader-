@@ -30,10 +30,7 @@ env();
 
    app.use(json());
 
-   socket = io.connect('http://185.105.239.182', {
-      port: 4440,
-      reconnection: true,
-   });
+   socket = io('http://185.105.239.182:4440');
 
    setTimeout(() => {
       socket?.on('connect', function () {
