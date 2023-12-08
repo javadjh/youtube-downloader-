@@ -85,8 +85,8 @@ const getFile = async (format: videoFormat, videoData: any, res, req: any) => {
       );
 
       socket?.emit('downloadYoutubeProgress', {
-         userId: req?.headers?.userId || 'test',
-         link: req.params?.link,
+         userId: req?.query?.userId || 'test',
+         link: req.query?.link,
          progress: `زمان حدودی باقی مانده ${downloadedMinutes.toFixed(
             2
          )} / حجم : (${(downloaded / 1024 / 1024).toFixed(2)}MB of ${(
