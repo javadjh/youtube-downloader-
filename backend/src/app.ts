@@ -1,6 +1,7 @@
 import 'reflect-metadata';
 import 'module-alias/register';
-import * as io from 'socket.io-client';
+import { io } from "socket.io-client";
+
 import express, { json, urlencoded } from 'express';
 import { routes } from 'routes';
 import { docOption, env } from 'config';
