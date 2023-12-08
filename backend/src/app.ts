@@ -1,6 +1,6 @@
 import 'reflect-metadata';
 import 'module-alias/register';
-import { io } from "socket.io-client";
+import { io } from 'socket.io-client';
 
 import express, { json, urlencoded } from 'express';
 import { routes } from 'routes';
@@ -35,9 +35,11 @@ env();
       reconnection: true,
    });
 
-   socket?.on('connect', function () {
-      console.log('socket connected');
-   });
+   setTimeout(() => {
+      socket?.on('connect', function () {
+         console.log('socket connected');
+      });
+   }, 5000);
 
    app.use(urlencoded({ extended: true }));
    app.use(express.static('uploads'));
