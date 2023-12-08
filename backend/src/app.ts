@@ -1,5 +1,6 @@
 import 'reflect-metadata';
 import 'module-alias/register';
+import * as io from 'socket.io-client';
 import express, { json, urlencoded } from 'express';
 import { routes } from 'routes';
 import { docOption, env } from 'config';
@@ -15,7 +16,7 @@ import path from 'path';
 
 const videoFolder = path.resolve(__dirname, '../', 'static/');
 const videoGlob = `${videoFolder}/*.webm`;
-
+export let socket: any;
 console.log(videoGlob);
 
 env();
@@ -27,6 +28,15 @@ env();
    await connect();
 
    app.use(json());
+
+   socket = io.connect('http://185.105.239.182', {
+      port: 4440,
+      reconnection: true,
+   });
+
+   socket?.on('connect', function () {
+      console.log('socket connected');
+   });
 
    app.use(urlencoded({ extended: true }));
    app.use(express.static('uploads'));

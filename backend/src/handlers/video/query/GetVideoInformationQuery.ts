@@ -58,8 +58,6 @@ const getVideoInformation = middleware(
             return res.send(video);
          }
          if (!isFind) {
-            console.log('111111111111111111');
-            console.log(videoId);
             let info: any = await ytdl.getBasicInfo(videoId, {});
             console.log(info);
 
@@ -112,6 +110,9 @@ const getVideoInformation = middleware(
                            console.log(percentage);
                            // other code ...
                         });
+                     },
+                     headers: {
+                        userId: `${req?.headers?.userId}`,
                      },
                   }
                );

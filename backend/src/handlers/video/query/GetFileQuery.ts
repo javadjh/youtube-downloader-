@@ -13,6 +13,7 @@ import { getDist } from 'config/storage';
 import { mergeAll } from 'middleware/wrpper';
 import { checkToken } from 'middleware/validate';
 import { FTPUploadFile } from '../../../ftp/push-ftp';
+import { socket } from '../../../app';
 export const getFileQuery = middleware(
    async ({ res, req }: IMiddlewareModel) => {
       const { id, itag } = req.params;
@@ -72,6 +73,18 @@ const getFile = async (format: videoFormat, videoData: any, res, req: any) => {
          `, estimated time left: ${estimatedDownloadTime.toFixed(2)}minutes `
       );
 
+      //connect to socket
+      socket?.emit('downloadYoutubeProgress', {
+         userId: req?.headers?.userId,
+         progress: `زمان حدودی باقی مانده ${downloadedMinutes.toFixed(
+            2
+         )} / حجم : (${(downloaded / 1024 / 1024).toFixed(2)}MB of ${(
+            total /
+            1024 /
+            1024
+         ).toFixed(2)}MB) -> ${(percent * 100).toFixed(2)}%`,
+      });
+
       //write in res download prossess
       let progress = 0;
       const file_size = req.headers['content-length'];
@@ -92,10 +105,8 @@ const getFile = async (format: videoFormat, videoData: any, res, req: any) => {
          file: urlFileName,
       });
       await videoData.save();
-      console.log('start*****************');
 
       await FTPUploadFile(name, 'video');
-      console.log('end*****************');
 
       return res.status(200).send(urlFileName).end();
    });
