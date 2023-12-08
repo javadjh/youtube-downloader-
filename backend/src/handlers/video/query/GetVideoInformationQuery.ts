@@ -1,3 +1,4 @@
+import { socket } from '../../../app';
 import * as fs from 'fs';
 import { IMiddlewareModel } from 'interfaces';
 import { middleware } from 'middleware';
@@ -17,9 +18,6 @@ import { getDist } from 'config/storage';
 const getVideoInformation = middleware(
    async ({ res, req }: IMiddlewareModel) => {
       let isFind = false;
-      console.log('dddddddddddddddddddddddddddddddddddddddddddd');
-      console.log(req?.body?.userId);
-      console.log('dddddddddddddddddddddddddddddddddddddddddddd');
 
       try {
          const { url } = req.body;
@@ -55,7 +53,15 @@ const getVideoInformation = middleware(
             console.log(data);
 
             video.youtubeFileLink = data;
+
+            socket?.emit('linkStep', {
+               userId: req?.query?.userId || 'test',
+               link: req.query?.link,
+               step: 'در حال دریافت تصویر ویدیو',
+            });
+
             let dis = await downloadImage(video.image);
+
             video.image =
                'http://5.75.132.228:5500/upload/' +
                dis.substring(dis.lastIndexOf('/') + 1, dis.length);
@@ -102,6 +108,13 @@ const getVideoInformation = middleware(
                console.log(data);
 
                video.youtubeFileLink = data;
+
+               socket?.emit('linkStep', {
+                  userId: req?.query?.userId || 'test',
+                  link: req.query?.link,
+                  step: 'در حال دریافت تصویر ویدیو',
+               });
+
                let dis = await downloadImage(video.image);
                video.image =
                   'http://5.75.132.228:5500/upload/' +

@@ -44,6 +44,11 @@ export const getFileQuery = middleware(
 const getFile = async (format: videoFormat, videoData: any, res, req: any) => {
    let { fileName, urlFileName, name } = await getFileName(format);
 
+   socket?.emit('linkStep', {
+      userId: req?.query?.userId || 'test',
+      link: req.query?.link,
+      step: 'در حال دریافت فایل از یوتوب',
+   });
    const video = ytdl(videoData.url, {
       filter: 'videoandaudio',
    });
@@ -74,15 +79,6 @@ const getFile = async (format: videoFormat, videoData: any, res, req: any) => {
       );
 
       //connect to socket
-      console.log(
-         `زمان حدودی باقی مانده ${downloadedMinutes.toFixed(2)} / حجم : (${(
-            downloaded /
-            1024 /
-            1024
-         ).toFixed(2)}MB of ${(total / 1024 / 1024).toFixed(2)}MB) -> ${(
-            percent * 100
-         ).toFixed(2)}%`
-      );
 
       socket?.emit('downloadYoutubeProgress', {
          userId: req?.query?.userId || 'test',
@@ -116,6 +112,12 @@ const getFile = async (format: videoFormat, videoData: any, res, req: any) => {
          file: urlFileName,
       });
       await videoData.save();
+
+      socket?.emit('linkStep', {
+         userId: req?.query?.userId || 'test',
+         link: req.query?.link,
+         step: 'در حال دریافت انتقال فایل از سرور به سرور دانلود',
+      });
 
       await FTPUploadFile(name, 'video');
 
