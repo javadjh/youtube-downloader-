@@ -46,7 +46,8 @@ const getVideoInformation = middleware(
                'http://5.75.132.228:5500/api/v1/video/link/' +
                   video._id +
                   '/' +
-                  video.formats[2].itag
+                  video.formats[2].itag,
+               { headers: { userId: `${req?.headers?.userId}` } }
             );
             console.log(data);
 
