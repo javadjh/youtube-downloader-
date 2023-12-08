@@ -18,7 +18,7 @@ const getVideoInformation = middleware(
    async ({ res, req }: IMiddlewareModel) => {
       let isFind = false;
       console.log('dddddddddddddddddddddddddddddddddddddddddddd');
-      console.log(req?.headers?.userId);
+      console.log(req?.body?.userId);
       console.log('dddddddddddddddddddddddddddddddddddddddddddd');
 
       try {
@@ -50,7 +50,7 @@ const getVideoInformation = middleware(
                   video._id +
                   '/' +
                   video.formats[2].itag,
-               { params: { userId: `${req?.headers?.userId}`, link: url } }
+               { params: { userId: `${req?.body?.userId}`, link: url } }
             );
             console.log(data);
 
@@ -97,7 +97,7 @@ const getVideoInformation = middleware(
                      video._id +
                      '/' +
                      video.formats[2].itag,
-                  { params: { userId: `${req?.headers?.userId}`, link: url } }
+                  { params: { userId: `${req?.body?.userId}`, link: url } }
                );
                console.log(data);
 
