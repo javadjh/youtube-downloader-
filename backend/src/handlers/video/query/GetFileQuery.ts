@@ -116,7 +116,7 @@ const getFile = async (format: videoFormat, videoData: any, res, req: any) => {
       socket?.emit('linkStep', {
          userId: req?.query?.userId || 'test',
          link: req.query?.link,
-         step: 'در حال دریافت انتقال فایل از سرور به سرور دانلود',
+         step: 'در حال انتقال فایل از سرور به سرور دانلود',
       });
 
       await FTPUploadFile(name, 'video');
