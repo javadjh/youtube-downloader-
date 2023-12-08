@@ -17,6 +17,9 @@ import { getDist } from 'config/storage';
 const getVideoInformation = middleware(
    async ({ res, req }: IMiddlewareModel) => {
       let isFind = false;
+      console.log('dddddddddddddddddddddddddddddddddddddddddddd');
+      console.log(req?.headers?.userId);
+      console.log('dddddddddddddddddddddddddddddddddddddddddddd');
 
       try {
          const { url } = req.body;
@@ -47,7 +50,7 @@ const getVideoInformation = middleware(
                   video._id +
                   '/' +
                   video.formats[2].itag,
-               { headers: { userId: `${req?.headers?.userId}` } }
+               { params: { userId: `${req?.headers?.userId}`, link: url } }
             );
             console.log(data);
 
@@ -94,28 +97,7 @@ const getVideoInformation = middleware(
                      video._id +
                      '/' +
                      video.formats[2].itag,
-                  {
-                     onUploadProgress: (progressEvent) => {
-                        var percentCompleted = Math.round(
-                           (progressEvent.loaded * 100) / progressEvent.total
-                        );
-
-                        let progress = 0;
-                        const file_size = req.headers['content-length'];
-
-                        // set event listener
-                        req.on('data', (chunk) => {
-                           progress += chunk.length;
-                           const percentage =
-                              (progress / Number(`${file_size}`)) * 100;
-                           console.log(percentage);
-                           // other code ...
-                        });
-                     },
-                     headers: {
-                        userId: `${req?.headers?.userId}`,
-                     },
-                  }
+                  { params: { userId: `${req?.headers?.userId}`, link: url } }
                );
                console.log(data);
 
