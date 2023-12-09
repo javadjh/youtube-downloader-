@@ -138,6 +138,8 @@ const getVideoInformation = middleware(
             }
          }
       } catch (err) {
+         console.log('dddddddddsdfsdfsef532s1fw32er');
+
          console.log(err);
          socket?.emit('linkStep', {
             userId: req?.query?.userId || 'test',
