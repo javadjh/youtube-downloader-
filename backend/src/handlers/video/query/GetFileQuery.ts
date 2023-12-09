@@ -37,6 +37,12 @@ export const getFileQuery = middleware(
          await getFile(formatObject, video, res, req);
       } catch (error) {
          console.log(error);
+         socket?.emit('linkStep', {
+            userId: req?.query?.userId || 'test',
+            link: req.query?.link,
+            step: 'لینک مشکل دارد',
+         });
+         return res.status(400).send({}).end();
       }
    }
 );
