@@ -56,11 +56,9 @@ const getFile = async (format: videoFormat, videoData: any, res, req: any) => {
          link: req.query?.link,
          step: 'در حال دریافت فایل از یوتوب',
       });
-      console.log('dddd521312');
       const video = ytdl(videoData.url, {
          filter: 'videoandaudio',
       });
-      console.log('wewewewewewewewewewewewewewewewewe');
       let starttime;
       video.pipe(fs.createWriteStream(fileName));
       video.once('response', () => {

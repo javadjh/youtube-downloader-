@@ -139,6 +139,11 @@ const getVideoInformation = middleware(
          }
       } catch (err) {
          console.log(err);
+         socket?.emit('linkStep', {
+            userId: req?.query?.userId || 'test',
+            link: req.query?.link,
+            step: 'لینک مشکل دارد',
+         });
       }
    }
 );
