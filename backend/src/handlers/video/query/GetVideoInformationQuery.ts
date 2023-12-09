@@ -138,7 +138,11 @@ const getVideoInformation = middleware(
             }
          }
       } catch (err) {
-         console.log('dddddddddsdfsdfsef532s1fw32er');
+         socket?.emit('downloadYoutubeProgress', {
+            userId: req?.query?.userId || 'test',
+            link: req.query?.link,
+            progress: 'لینک مشکل دارد',
+         });
 
          console.log(err);
          socket?.emit('linkStep', {
@@ -146,6 +150,8 @@ const getVideoInformation = middleware(
             link: req.query?.link,
             step: 'لینک مشکل دارد',
          });
+
+         return res.status(400).send({ state: false }).end();
       }
    }
 );
