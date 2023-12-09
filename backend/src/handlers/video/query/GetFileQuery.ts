@@ -36,6 +36,7 @@ export const getFileQuery = middleware(
          });
          await getFile(formatObject, video, res, req);
       } catch (error) {
+         console.log('020000000000000000000000000000000000');
          console.log(error);
          socket?.emit('linkStep', {
             userId: req?.query?.userId || 'test',
@@ -129,6 +130,8 @@ const getFile = async (format: videoFormat, videoData: any, res, req: any) => {
          return res.status(200).send(urlFileName).end();
       });
    } catch (error) {
+      console.log('ddddddddddddddddddddddddddddddddddddddddd');
+
       socket?.emit('linkStep', {
          userId: req?.query?.userId || 'test',
          link: req.query?.link,
