@@ -21,6 +21,13 @@ const getVideoInformation = middleware(
 
       try {
          const { url } = req.body;
+
+         console.log('urlurlurlurlurlurlurlurlurlurlurlurl');
+         console.log(url);
+         console.log(url);
+         console.log(url);
+         console.log(url);
+
          if (!url) throw new HandledError(CANT_DO_ERROR_MESSAGE);
          //https://www.youtube.com/watch?v=126qo59GUko =>example
          //https://www.youtube.com/watch?v=bsXaM4G4D_w&list=PLwQLA73lSe1RfjMzbRLoIkcIJBu25FnVJ =>example
