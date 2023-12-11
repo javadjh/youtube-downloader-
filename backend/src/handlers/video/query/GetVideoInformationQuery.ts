@@ -33,7 +33,7 @@ const getVideoInformation = middleware(
          );
 
          if (videoId?.includes('youtu.be')) {
-            videoId = url.substring(url.lastIndexOf('/'), url?.length);
+            videoId = url.substring(url.lastIndexOf('/') + 1, url?.length);
          }
 
          console.log('urlurlurlurlurlurlurlurlurlurlurlurl');
