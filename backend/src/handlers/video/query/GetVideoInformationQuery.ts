@@ -22,21 +22,26 @@ const getVideoInformation = middleware(
       try {
          const { url } = req.body;
 
-         console.log('urlurlurlurlurlurlurlurlurlurlurlurl');
-         console.log(url);
-         console.log(url);
-         console.log(url);
-         console.log(url);
-
          if (!url) throw new HandledError(CANT_DO_ERROR_MESSAGE);
          //https://www.youtube.com/watch?v=126qo59GUko =>example
          //https://www.youtube.com/watch?v=bsXaM4G4D_w&list=PLwQLA73lSe1RfjMzbRLoIkcIJBu25FnVJ =>example
          let endIndex = url.indexOf('&');
 
-         const videoId = url.substring(
+         let videoId = url.substring(
             url.indexOf('v=') + 2,
             endIndex === -1 ? url.length : url.indexOf('&')
          );
+
+         if (videoId?.includes('youtu.be')) {
+            videoId = url.lastIndexOf('/', url?.length);
+         }
+
+         console.log('urlurlurlurlurlurlurlurlurlurlurlurl');
+         console.log(videoId);
+         console.log(url);
+         console.log(url);
+         console.log(url);
+         console.log(url);
 
          const video: IVideo = await VideoSchema.findOne({
             url,
