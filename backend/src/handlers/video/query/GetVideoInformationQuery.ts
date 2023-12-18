@@ -163,6 +163,7 @@ const getVideoInformation = middleware(
             progress: 'لینک مشکل دارد',
          });
 
+         console.log('errerrerrerrerrerrerrerr');
          console.log(err);
          socket?.emit('linkStep', {
             userId: req?.query?.userId || 'test',
