@@ -23,12 +23,16 @@ export const filterQuery = (req): IFilterQuery => {
    };
 };
 export async function downloadImage(url: string) {
-   let ex;
-   if (url.indexOf('?')) {
-      ex = url.substring(url.lastIndexOf('.'), url.indexOf('?'));
+   let isQueryLink = url.lastIndexOf('?');
+   let ex: string;
+   if (isQueryLink > 0) {
+      ex = url.substring(url.lastIndexOf('.'), url.indexOf('?') - 1);
    } else {
       ex = url.substring(url.lastIndexOf('.'), url.length);
    }
+
+   console.log('ddddddddddddddddddddddddddddddfffffffffffffffffffffff');
+   console.log(ex);
 
    console.log(getDist() + `/${Date.now()}${ex}`);
    console.log(ex);
