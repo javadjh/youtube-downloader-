@@ -74,7 +74,10 @@ const getVideoInformation = middleware(
          }
          if (!isFind) {
             let info: any = await ytdl.getBasicInfo(videoId, {});
-            console.log(info);
+            // console.log(info);
+            console.log(
+               'info.player_response.videoDetailsinfo.player_response.videoDetailsinfo.player_response.videoDetails'
+            );
             console.log(info.player_response.videoDetails);
             console.log(
                info.player_response.videoDetails?.thumbnail?.thumbnails
