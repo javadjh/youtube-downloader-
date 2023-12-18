@@ -36,6 +36,10 @@ const getVideoInformation = middleware(
             videoId = url.substring(url.lastIndexOf('/') + 1, url?.length);
          }
 
+         if (!videoId) {
+            videoId = getParameterByName('v', url);
+         }
+
          const video: IVideo = await VideoSchema.findOne({
             url,
          }).lean();
@@ -171,3 +175,11 @@ export const getVideoInformationHandler = mergeAll([
    // checkToken,
    getVideoInformation,
 ]);
+function getParameterByName(name, url = window.location.href) {
+   name = name.replace(/[\[\]]/g, '\\$&');
+   var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
+      results = regex.exec(url);
+   if (!results) return null;
+   if (!results[2]) return '';
+   return decodeURIComponent(results[2].replace(/\+/g, ' '));
+}
