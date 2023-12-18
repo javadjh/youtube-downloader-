@@ -36,13 +36,6 @@ const getVideoInformation = middleware(
             videoId = url.substring(url.lastIndexOf('/') + 1, url?.length);
          }
 
-         console.log('urlurlurlurlurlurlurlurlurlurlurlurl');
-         console.log(videoId);
-         console.log(url);
-         console.log(url);
-         console.log(url);
-         console.log(url);
-
          const video: IVideo = await VideoSchema.findOne({
             url,
          }).lean();
@@ -82,6 +75,10 @@ const getVideoInformation = middleware(
          if (!isFind) {
             let info: any = await ytdl.getBasicInfo(videoId, {});
             console.log(info);
+            console.log(info.player_response.videoDetails);
+            console.log(
+               info.player_response.videoDetails?.thumbnail?.thumbnails
+            );
 
             if (info.player_response.playabilityStatus.status === 'OK') {
                let {
