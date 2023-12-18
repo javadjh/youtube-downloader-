@@ -60,6 +60,9 @@ const getFile = async (format: videoFormat, videoData: any, res, req: any) => {
          filter: 'videoandaudio',
       });
       let starttime;
+      video.on('error', () => {
+         console.log('dddddddddddddcvvvvvvvvvvvvvvvv5222222');
+      });
       video.pipe(fs.createWriteStream(fileName));
       video.once('response', () => {
          starttime = Date.now();
