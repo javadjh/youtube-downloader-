@@ -80,7 +80,16 @@ const getVideoInformation = middleware(
             return res.send(video);
          }
          if (!isFind) {
-            let info: any = await ytdl.getBasicInfo(videoId, {});
+            let info: any;
+
+            try {
+               info = await ytdl.getBasicInfo(videoId, {});
+               console.log('ddddddddddddddddddddddddddddddddd');
+            } catch (error) {
+               console.log('edrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr');
+               console.log(error);
+            }
+
             // console.log(info);
             console.log(
                'info.player_response.videoDetailsinfo.player_response.videoDetails'
