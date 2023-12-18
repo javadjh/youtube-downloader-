@@ -39,7 +39,7 @@ const getVideoInformation = middleware(
          const video: IVideo = await VideoSchema.findOne({
             url,
          }).lean();
-         if (video?._id) {
+         if (false) {
             isFind = true;
             video.formats.map((format) => {
                format.contentLength = byteToSize(
@@ -72,7 +72,7 @@ const getVideoInformation = middleware(
                dis.substring(dis.lastIndexOf('/') + 1, dis.length);
             return res.send(video);
          }
-         if (!isFind) {
+         if (true) {
             let info: any = await ytdl.getBasicInfo(videoId, {});
             // console.log(info);
             console.log(
