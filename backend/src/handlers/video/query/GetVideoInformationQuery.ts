@@ -40,6 +40,9 @@ const getVideoInformation = middleware(
             videoId = getParameterByName('v', url);
          }
 
+         console.log('ddddddddddddddddddfffffffffffffff3333333333333');
+         console.log(videoId);
+
          const video: IVideo = await VideoSchema.findOne({
             url,
          }).lean();
