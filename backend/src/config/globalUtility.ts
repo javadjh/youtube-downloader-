@@ -26,7 +26,7 @@ export async function downloadImage(url: string) {
    let isQueryLink = url.lastIndexOf('?');
    let ex: string;
    if (isQueryLink > 0) {
-      ex = url.substring(url.lastIndexOf('.'), url.indexOf('?') - 1);
+      ex = url.substring(url.lastIndexOf('.'), url.indexOf('?'));
    } else {
       ex = url.substring(url.lastIndexOf('.'), url.length);
    }
