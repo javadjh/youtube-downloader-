@@ -43,7 +43,7 @@ env();
 
    app.use('/doc', swaggerUI.serve, swaggerUI.setup(docOption));
 
-   app.use('/api/v1', apiMiddleware);
+   app.use('/v1', apiMiddleware);
 
    app.use('/upload', fileMiddleware);
    app.get('/files', async (req, res) => {
