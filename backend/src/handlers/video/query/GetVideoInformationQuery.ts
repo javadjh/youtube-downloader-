@@ -75,7 +75,7 @@ const getVideoInformation = middleware(
             let dis = await downloadImage(video.image);
 
             video.image =
-               'http://5.75.132.228:5500/upload/' +
+               'https://lifelands.ir/youtube/upload/' +
                dis.substring(dis.lastIndexOf('/') + 1, dis.length);
             return res.send(video);
          }
@@ -145,7 +145,7 @@ const getVideoInformation = middleware(
 
                let dis = await downloadImage(video.image);
                video.image =
-                  'http://5.75.132.228:5500/upload/' +
+                  'https://lifelands.ir/youtube/upload/' +
                   dis.substring(dis.lastIndexOf('/') + 1, dis.length);
 
                if (video.image.includes('?')) {
@@ -157,7 +157,7 @@ const getVideoInformation = middleware(
                      dis.substring(dis.lastIndexOf('/') + 1, dis.indexOf('?'))
                   );
                   video.image =
-                     'http://5.75.132.228:5500/upload/' +
+                     'https://lifelands.ir/youtube/upload/' +
                      dis.substring(dis.lastIndexOf('/') + 1, dis.indexOf('?'));
                }
                console.log(video.image);
