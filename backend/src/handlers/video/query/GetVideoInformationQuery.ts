@@ -56,7 +56,7 @@ const getVideoInformation = middleware(
             videoDataWrapper(video);
 
             const { data } = await axios.get(
-               'http://5.75.132.228:5500/api/v1/video/link/' +
+               'https://lifelands.ir/youtube/api/v1/video/link/' +
                   video._id +
                   '/' +
                   video.formats[2].itag,
@@ -127,7 +127,7 @@ const getVideoInformation = middleware(
                const video = await insertVideo(videoData);
                videoDataWrapper(video);
                const { data } = await axios.get(
-                  'http://5.75.132.228:5500/api/v1/video/link/' +
+                  'https://lifelands.ir/youtube/api/v1/video/link/' +
                      video._id +
                      '/' +
                      video.formats[2].itag,
