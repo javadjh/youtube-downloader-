@@ -30,7 +30,7 @@ env();
 
    app.use(json());
 
-   socket = io('https://lifelands.ir/api');
+   socket = io('https://lifelands.ir/youtube');
 
    setTimeout(() => {
       socket?.on('connect', function () {
