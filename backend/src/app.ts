@@ -30,7 +30,7 @@ env();
 
    app.use(json());
 
-   socket = io('http://185.105.239.182:4440');
+   socket = io('https://lifelands.ir');
 
    setTimeout(() => {
       socket?.on('connect', function () {

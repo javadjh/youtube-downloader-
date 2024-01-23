@@ -157,7 +157,7 @@ const getFileName = async (format: videoFormat): Promise<any> => {
 
    let name = Date.now() + format.itag + `.${ex}`;
    let fileName = getDist() + '/' + name;
-   let urlFileName = `http://dl.lifelands.ir/video/${name}`;
+   let urlFileName = `https://dl.lifelands.ir/video/${name}`;
 
    return { fileName, urlFileName, name };
 };
