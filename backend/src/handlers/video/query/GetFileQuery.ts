@@ -17,17 +17,24 @@ import { socket } from '../../../app';
 export const getFileQuery = middleware(
    async ({ res, req }: IMiddlewareModel) => {
       const { id, itag } = req.params;
+      console.log('first log');
 
-      if (!isValidObjectId(id)) throw new HandledError(OBJECT_ID_ERROR_MESSAGE);
+      console.log(id, 'id');
+
+      if (id) {
+         if (!isValidObjectId(id)) throw new HandledError(OBJECT_ID_ERROR_MESSAGE);
+      }
+
       const video: IVideo = await VideoSchema.findById(id);
-
+      console.log('second log');
       try {
+         console.log('third log');
          video.files.map((file) => {
             if (itag.toString() === file.itag) {
                return res.status(200).send(file.file).end();
             }
          });
-
+         console.log('forth log');
          let formatObject: videoFormat;
          video.formats.map((format) => {
             if (format.itag.toString() === itag) {
@@ -36,8 +43,9 @@ export const getFileQuery = middleware(
          });
          await getFile(formatObject, video, res, req);
       } catch (error) {
+         console.log('fifth log');
          console.log('020000000000000000000000000000000000');
-         console.log(error);
+         console.log(error, 'error');
          socket?.emit('linkStep', {
             userId: req?.query?.userId || 'test',
             link: req.query?.link,
@@ -148,12 +156,12 @@ const getFileName = async (format: videoFormat): Promise<any> => {
    let ex = mime.includes('video/mp4;')
       ? 'mp4'
       : mime.includes('video/webm')
-      ? 'webm'
-      : mime.includes('audio/mp4;')
-      ? 'm4a'
-      : mime.includes('audio/webm;')
-      ? 'webm'
-      : 'mp4';
+         ? 'webm'
+         : mime.includes('audio/mp4;')
+            ? 'm4a'
+            : mime.includes('audio/webm;')
+               ? 'webm'
+               : 'mp4';
 
    let name = Date.now() + format.itag + `.${ex}`;
    let fileName = getDist() + '/' + name;

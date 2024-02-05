@@ -19,13 +19,21 @@ import { Request } from 'express';
 //    if (whitelist.indexOf(origin) !== -1) {
 //    }
 // });
-const whitelist = ['lifelands.ir', '37.32.14.122', '37.32.14.122:80', 'https://lifelands.ir'];
+const whitelist = [
+   'lifelands.ir',
+   '37.32.14.122',
+   '37.32.14.122:80',
+   'https://lifelands.ir',
+];
 export const CorsMiddleware = cors((req: Request, handler) => {
    let options;
 
    console.log(req?.get('host'));
    console.log(req?.get('Origin'));
-   if (whitelist.indexOf(req?.get('host')) !== -1 || whitelist.indexOf(req?.get('Origin')) !== -1) {
+   if (
+      whitelist.indexOf(req?.get('host')) !== -1 ||
+      whitelist.indexOf(req?.get('Origin')) !== -1
+   ) {
       options = { origin: true };
    } else {
       options = { origin: false };
