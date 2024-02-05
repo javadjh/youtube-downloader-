@@ -22,7 +22,8 @@ export const getFileQuery = middleware(
       console.log(id, 'id');
 
       if (id) {
-         if (!isValidObjectId(id)) throw new HandledError(OBJECT_ID_ERROR_MESSAGE);
+         if (!isValidObjectId(id))
+            throw new HandledError(OBJECT_ID_ERROR_MESSAGE);
       }
 
       const video: IVideo = await VideoSchema.findById(id);
@@ -156,12 +157,12 @@ const getFileName = async (format: videoFormat): Promise<any> => {
    let ex = mime.includes('video/mp4;')
       ? 'mp4'
       : mime.includes('video/webm')
-         ? 'webm'
-         : mime.includes('audio/mp4;')
-            ? 'm4a'
-            : mime.includes('audio/webm;')
-               ? 'webm'
-               : 'mp4';
+      ? 'webm'
+      : mime.includes('audio/mp4;')
+      ? 'm4a'
+      : mime.includes('audio/webm;')
+      ? 'webm'
+      : 'mp4';
 
    let name = Date.now() + format.itag + `.${ex}`;
    let fileName = getDist() + '/' + name;
